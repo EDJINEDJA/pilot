@@ -152,10 +152,10 @@ class pilot( ):
             print(" _______ Certains Features have low-variance _____ ")
 
     
-    def Ordinal2numericalAlpha(self,ordinalColumns,data):
+    def Ordinal2numerical(self,ordinalColumns,data):
         """
           It is important to know which encoder used depending on the type of categorical variable we have.
-          Alpha is used to encoder only ordinal variable:
+          Ordinal2numerical is used to encoder only ordinal variable:
           Indeed Ordinal variable do not have an inherent order
         """
         print("Make sure that ordinalColumns contains only ordinal variables")
@@ -168,10 +168,25 @@ class pilot( ):
 
         return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
     
-    def Ordinal2numericalBeta(self,ordinalColumns,data):
+    def nominal2numerical(self,nominalColumns,data):
+        """
+          It is important to know which encoder used depending on the type of categorical variable we have.
+          nominal2numerical is used to encoder only nominal variable:
+          Indeed nominal variable have an inherent order
+        """
+        print("Make sure that nominalColumns contains only nominal variables")
+        print("This tools use Label encoder ")
 
-        onehotencoder = OneHotEncoder(categorical_features = [0])
-        X = onehotencoder.fit_transform(X).toarray()
+        columns= data.columns
+        dataCategorical=data[nominalColumns].apply(LabelEncoder().fit_transform)
+        remainderV=set(columns)-set(nominalColumns)
+
+        return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
+      
+
+
+
+
 
 
 
