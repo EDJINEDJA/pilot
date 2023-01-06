@@ -24,6 +24,8 @@
 
 import numpy as np
 from sklearn.feature_selection import VarianceThreshold
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+import pandas as pd 
 
 class pilot( ):
 
@@ -152,7 +154,7 @@ class pilot( ):
     
     def Ordinal2numericalAlpha(self,ordinalColumns,data):
         """
-          It is important to know which encoder to use depending on the type of categorical variable we have.
+          It is important to know which encoder used depending on the type of categorical variable we have.
           Alpha is used to encoder only ordinal variable:
           Indeed Ordinal variable do not have an inherent order
         """
@@ -165,3 +167,11 @@ class pilot( ):
         remainderV=set(columns)-set(ordinalColumns)
 
         return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
+    
+    def Ordinal2numericalBeta(self,ordinalColumns,data):
+
+        onehotencoder = OneHotEncoder(categorical_features = [0])
+        X = onehotencoder.fit_transform(X).toarray()
+
+
+
