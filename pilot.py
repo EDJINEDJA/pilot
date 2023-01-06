@@ -1,4 +1,3 @@
-
 """ 
    Description: 
       _____ pilot is a package that aims to perform features engineering.____
@@ -25,6 +24,7 @@
 import numpy as np
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+from sklearn.preprocessing import normalize
 import pandas as pd 
 
 class pilot( ):
@@ -49,16 +49,17 @@ class pilot( ):
         columns= self.Columns()
 
         NanColumns =  [item for item in columns if data[item].isna().sum().sum()!=0]
+        percentageMV=data.isnull().sum()/len(data)*100
 
         if len(NanColumns) == 0 :
-            return " _______ No missing values in the data _____ "
+            return " _______ No missing values in the data |-- {percentageMV}% missing values --|_____ "
         else : 
             text="--"
             for item in  NanColumns:
                 
                 text = text + item + "--"
             text 
-            print( text + " contains missing values.")
+            print( text + f" contains {percentageMV}% of missing values.")
 
 
     def checkDtypes(self,data):
@@ -92,7 +93,7 @@ class pilot( ):
     def removeUnnecessaryColumns(self,data,UnnecessaryColumns):
 
         """
-        Sometimes we quickly deduce that our data contains unnecessary variables (eg : date) and we decide to drop it.
+            Sometimes we quickly deduce that our data contains unnecessary variables (eg : date) and we decide to drop it.
         """
 
         data.drop(UnnecessaryColumns, axis=1, inplace=True)
@@ -103,17 +104,17 @@ class pilot( ):
     def checkOutliers(self, data):
 
         """
-                Outliers values engineering 
-                To determine whether the data contain outliers, we use the following techniques
+            Outliers values engineering 
+            To determine whether the data contain outliers, we use the following techniques
 
-                1- Z-score 
-                2- Percentille 
-                In our side, we use Z-score wich is formalise as follow:for each variable denote X_j we perform the mean and the variance 
-                z-score of each value X_ij of X_j is: |X_ij-mean/var(Xj)|
-                We use the third standard deviation as treshold
-                All value which have z-score fall outside the treshold is considered to be a outlier values.
-                eg: if the treshold=3 and we have the equality as follow
-                z-score_ij > 3 mean that X_ij is not an outlier values.
+            1- Z-score 
+            2- Percentille 
+            In our side, we use Z-score wich is formalise as follow:for each variable denote X_j we perform the mean and the variance 
+            z-score of each value X_ij of X_j is: |X_ij-mean/var(Xj)|
+            We use the third standard deviation as treshold
+            All value which have z-score fall outside the treshold is considered to be a outlier values.
+            eg: if the treshold=3 and we have the equality as follow
+            z-score_ij > 3 mean that X_ij is not an outlier values.
         """
         ind_num = np.isin(data.dtypes,['int16','int32','int64','float64','float16','float32'])
 
@@ -135,7 +136,16 @@ class pilot( ):
     def checkLowVariance(self, data,threshold):
 
         """
-           Check low-variance features
+           Variance tells us about the spread of the data.
+           It tells us how far the points are from the mean.
+
+           The mathematical formulation about that is the following sigma²= sum_i(xi - mean)²/n
+           For example, if the integer values ​​of a variable are the same, the variance equals 0. 
+           A treshold tr=0.05 allow us to benchmark and  delete low variance variable.
+           The low variance variable has no impact on the target variable.
+           Apply the low variance filter tries to reduce the dimensionality of the data.
+
+           This tools helps us to know only if the data contains low variance variable 
         """
 
         ind_num = np.isin(data.dtypes,['int16','int32','int64','float64','float16','float32'])
@@ -150,6 +160,31 @@ class pilot( ):
             return  print(" _______ No Features have low-variance _____ ")
         else :
             print(" _______ Certains Features have low-variance _____ ")
+
+    def checkLowVarianceColumns(self, data,threshold):
+        """
+           This tools helps us to know the low variance variable 
+        """
+
+        ind_num = np.isin(data.dtypes,['int16','int32','int64','float64','float16','float32'])
+
+        data=data.iloc[:,ind_num]
+
+        Normalize = normalize(data)
+
+        data_scaled = pd.DataFrame(Normalize)
+
+        #storing the variance and name of variables
+        variance = data_scaled.var()
+        columns = data.columns
+
+        #saving the names of variables having variance more than a threshold value
+        variable = [columns[i] for i in range(0,len(variance)) if variance[i]>=threshold]
+
+        if len(variable ) == 0:
+            print("  _______ No Features have low-variance _____ ")
+        else:
+            print(f"_______low-variance columns : {variable}_______")
 
     
     def Ordinal2numerical(self,ordinalColumns,data):
