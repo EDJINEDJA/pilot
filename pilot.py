@@ -16,13 +16,13 @@
                -Scaling numerical features 
                -Extracting of date
               
-
+dataset was taken as it has missing values.
       This technology will help you to have you hand on features engineering and perform well the choice of prominent variables
       
 """
 
 
-import numpy as np
+import numpy as nphttps://github.com/EDJINEDJA/pilot.git
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.preprocessing import normalize
@@ -218,7 +218,60 @@ class pilot( ):
         remainderV=set(columns)-set(nominalColumns)
 
         return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
-      
+
+
+    def HandlMissingValues(data, delete = False, Replace = False, fill = "zero", interpolate=False):
+        """
+        Unprocessed data must be contain some missing values  
+        Variables:
+        data: dataset was taken as it has missing values.
+        delete: Delete Rows with Missing Values
+        Replace: Replacing With Arbitrary Value
+        fill: Filling missing values with zero or backfill or forward fill 
+             * fill = "zero": filling NaN values with Zero
+             * fill = "forward": Filling NaN values with forward fill value
+             * fill = "Backward": Filling NaN values in Backward Direction
+        interpolate: Interpolation to fill missing values in series data
+                -line:Linear Method
+                -back:Backward Direction
+                -pad:Interpolation through Padding
+        """
+        # delete all missing values 
+        if delete:
+            data = data.dropna(how='all')
+        
+        #  replace the missing value with some arbitrary value
+        if Replace:
+            #Filling missing values with 0
+            if fill == "zero":
+                Filling NaN values in Backward Direction
+                data = data.fillna(0)
+
+            #Filling Nan values with forward fill values
+            if fill =="Forward":
+                data = data.fillna(method="ffill")
+
+            # Filling NaN values in Backward Direction
+            if fill == "Backward":
+                data = data.fillna(method="bfill")
+            
+            
+        if interpolate == "line":
+           data = data.interpolate(method ='linear')
+        
+        if interpolate == "fline"
+        data = data.interpolate(method ='linear', limit_direction ='forward')
+
+        if interpolate == "bline":
+           data = data.interpolate(method ='linear', limit_direction = 'backward')
+
+        if interpolate == "pad":
+           data = data.interpolate(method ='linear', limit_direction ='forward')
+
+        
+
+
+
 
 
 
