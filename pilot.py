@@ -22,7 +22,7 @@ dataset was taken as it has missing values.
 """
 
 
-import numpy as nphttps://github.com/EDJINEDJA/pilot.git
+import numpy as np #https://github.com/EDJINEDJA/pilot.git
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.preprocessing import normalize
@@ -244,7 +244,7 @@ class pilot( ):
         if Replace:
             #Filling missing values with 0
             if fill == "zero":
-                Filling NaN values in Backward Direction
+                #Filling NaN values in Backward Direction
                 data = data.fillna(0)
 
             #Filling Nan values with forward fill values
@@ -260,8 +260,8 @@ class pilot( ):
            data = data.interpolate(method ='linear')
         
         #  Linear Interpolation in Backward Direction
-        if interpolate == "fline"
-        data = data.interpolate(method ='linear', limit_direction ='forward')
+        if interpolate == "fline":
+            data = data.interpolate(method ='linear', limit_direction ='forward')
         
         # Linear Interpolation in Backward Direction
         if interpolate == "bline":
@@ -271,7 +271,7 @@ class pilot( ):
         if interpolate == "pad":
            data = data.interpolate(method ='pad')
     
-    return data
+        return data
 
 
 
