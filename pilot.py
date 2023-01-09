@@ -259,16 +259,19 @@ class pilot( ):
         if interpolate == "line":
            data = data.interpolate(method ='linear')
         
+        #  Linear Interpolation in Backward Direction
         if interpolate == "fline"
         data = data.interpolate(method ='linear', limit_direction ='forward')
-
+        
+        # Linear Interpolation in Backward Direction
         if interpolate == "bline":
            data = data.interpolate(method ='linear', limit_direction = 'backward')
 
+        # Interpolation with Padding
         if interpolate == "pad":
-           data = data.interpolate(method ='linear', limit_direction ='forward')
-
-        
+           data = data.interpolate(method ='pad')
+    
+    return data
 
 
 
