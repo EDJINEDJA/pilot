@@ -274,11 +274,3 @@ class pilot( ):
         return data
 
 
-
-
-
-
-
-
-
-
