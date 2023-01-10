@@ -41,7 +41,7 @@
 
 ## Aims and Objectives
 
-pilot is a package that aims to perform features engineering.
+pilot is a package that aims to perform feature engineering.
 
 ## What is Feature engineering
 An optimal machine learning using python can't be build without features engineering.
@@ -61,6 +61,21 @@ Features engineering contains numerous types of technologies:
               
 This technology will help you to have you hand on feature engineering and perform well the choice of prominent variables.
 ## Setup
+ 
+- requirement file
+Use the requirements file to install all mandatory modules to infer this tool in your virtual environment.
+pip install -r requirements.txt
+
+- git clone 
+
+Clone this repository in the main folder of your project to use pilot. 
+
+git clone https://github.com/EDJINEDJA/pilot
+
+- Call package
+
+import pilot 
+from pilot import pilot 
 
 ## Handle missing values
 
