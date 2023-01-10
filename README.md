@@ -45,21 +45,24 @@ pilot is a package that aims to perform feature engineering.
 
 ## What is Feature engineering
 An optimal machine learning using python can't be build without features engineering.
+<br>
 What is exactlly Features Engineering? 
+<br>
 In order to select prominent variables for avoid issues such as overfitting, underfitting etc
 When we build machine learning models, it is suitable to consuming little bit time on feature engineering.
-Features engineering contains numerous types of technologies:
-        -Handle missing values 
-        -Handle outliers
-        -Remove unnecessary variables 
-        -Delete low-variance variables 
-        -Show Numerical and categorical variables
-        -Encoding categorical variables
-        -Numerical transformation 
-        -Scaling numerical features 
-        -Extracting of date
+- Features engineering contains numerous types of technologies:
+- Handle missing values 
+- Handle outliers
+- Remove unnecessary variables 
+- Delete low-variance variables 
+- Show Numerical and categorical variables
+- Encoding categorical variables
+- Numerical transformation 
+- Scaling numerical features 
+- Extracting of date
               
 This technology will help you to have you hand on feature engineering and perform well the choice of prominent variables.
+
 ## Setup
  
 - requirement file
