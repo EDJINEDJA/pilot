@@ -5,6 +5,7 @@
         <img src="https://github.com/EDJINEDJA/pilot/blob/main/hat.png" alt="Pilot">
     </a> 
     <br>
+    <h2> Pilot [Hand on Features engineering]</h2>
     <a href="https://www.python.org/doc/" alt="Python 3.7">
         <img src="https://img.shields.io/badge/python-v3.7+-blue.svg" />
     </a>
