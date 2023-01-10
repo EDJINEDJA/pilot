@@ -1,4 +1,4 @@
-<a href="http://matthaythornthwaite.pythonanywhere.com/"><img src="https://raw.githubusercontent.com/mhaythornthwaite/Football_Prediction_Project/master/web_server/static/images/Smart_Football_Predictor_Github_Logo_v2.png" alt="Smart Football Predictor" alt="Smart Football Predictor"></a>
+<a href="https://github.com/EDJINEDJA/pilot"><img src="https://github.com/EDJINEDJA/pilot/blob/main/pilot.png" alt="Pilot"></a>
 
 <p align="center">
     <a href="https://www.python.org/doc/" alt="Python 3.7">
