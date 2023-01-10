@@ -220,57 +220,64 @@ class pilot( ):
         return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
 
 
-    def HandlMissingValues(data, delete = False, Replace = False, fill = "zero", interpolate=False):
+    def HandlMissingValues(self, data, strategy = "default"):
         """
         Unprocessed data must be contain some missing values  
         Variables:
         data: dataset was taken as it has missing values.
-        delete: Delete Rows with Missing Values
-        Replace: Replacing With Arbitrary Value
+        strategy = "default" ---> Delete Rows with Missing Values
+        strategy = "replace" ---> Replacing With Arbitrary Value
+
         fill: Filling missing values with zero or backfill or forward fill 
-             * fill = "zero": filling NaN values with Zero
-             * fill = "forward": Filling NaN values with forward fill value
-             * fill = "Backward": Filling NaN values in Backward Direction
+        strategy = "fill_zero" ---> filling NaN values with Zero
+        strategy = "fill_forward" ---> Filling NaN values with forward fill value
+        strategy = "fill_backward"  ---> Filling NaN values in Backward Direction
+
         interpolate: Interpolation to fill missing values in series data
                 -line:Linear Method
                 -back:Backward Direction
-                -pad:Interpolation through Padding
+                -pad:Interpolation through Paddingion to fill missing values in series data
+        strategy = "interpolate_line"  ---> Linear Method
+        strategy = "interpolate_line"  ---> forward Method
+        strategy = "interpolate_bline"  ---> Backward Direction
+        strategy = "interpolate_pad"  ---> Interpolation through Padding
+        
         """
         # delete all missing values 
-        if delete:
+        if strategy == "default":
             data = data.dropna(how='all')
         
         #  replace the missing value with some arbitrary value
-        if Replace:
-            #Filling missing values with 0
-            if fill == "zero":
-                #Filling NaN values in Backward Direction
-                data = data.fillna(0)
+        #Filling missing values with 0
+        if strategy == "fill_zero": 
+            data = data.fillna(0)
+        #Filling Nan values with forward fill values
+        if strategy == "fill_forward":
+            data = data.fillna(method="ffill")
 
-            #Filling Nan values with forward fill values
-            if fill =="Forward":
-                data = data.fillna(method="ffill")
-
-            # Filling NaN values in Backward Direction
-            if fill == "Backward":
-                data = data.fillna(method="bfill")
-            
-            
-        if interpolate == "line":
+        # Filling NaN values in Backward Direction
+        if strategy == "fill_backward":
+            data = data.fillna(method="bfill")
+        
+        #  Interpolation to fill missing values in series data  
+        if strategy =="interpolate_line":
            data = data.interpolate(method ='linear')
         
-        #  Linear Interpolation in Backward Direction
-        if interpolate == "fline":
+        #  Linear Interpolation in forward Direction
+        if strategy =="interpolate_fline":
             data = data.interpolate(method ='linear', limit_direction ='forward')
         
         # Linear Interpolation in Backward Direction
-        if interpolate == "bline":
+        if strategy =="interpolate_bline":
            data = data.interpolate(method ='linear', limit_direction = 'backward')
 
         # Interpolation with Padding
-        if interpolate == "pad":
+        if strategy == "interpolate_pad":
            data = data.interpolate(method ='pad')
     
         return data
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1f0f1d74485c3fa72613b288c14828c20883fd83
