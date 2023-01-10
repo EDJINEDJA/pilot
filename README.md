@@ -1,8 +1,9 @@
-<a href="https://github.com/EDJINEDJA/pilot">
-    <img src="https://github.com/EDJINEDJA/pilot/blob/main/hat.png" alt="Pilot">
-</a>
+
 
 <p align="center">
+    <a href="https://github.com/EDJINEDJA/pilot">
+        <img src="https://github.com/EDJINEDJA/pilot/blob/main/hat.png" alt="Pilot">
+    </a>
     <a href="https://www.python.org/doc/" alt="Python 3.7">
         <img src="https://img.shields.io/badge/python-v3.7+-blue.svg" />
     </a>
