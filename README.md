@@ -2,7 +2,6 @@
     <a href="https://github.com/EDJINEDJA/pilot">
         <img src="https://github.com/EDJINEDJA/pilot/blob/main/hands.png" alt="Pilot">
     </a> 
-    <h2> Pilot [Hand on Features engineering]</h2>
 <br>
 
 
@@ -29,13 +28,57 @@
 
 <!--ts-->
 * [Aims and Objectives](#Aims-and-Objectives)
-* [Dataset](#Dataset)
-* [Data Cleaning and Preparation](#Data-Cleaning-and-Preparation)
-* [Feature Engineering and Data Visualisation](#Feature-Engineering-and-Data-Visualisation)
-* [Model Selection and Training](#Model-Selection-and-Training)
-* [Evaluation](#Evaluation)
-* [Further Work and Improvements](#Further-Work-and-Improvements)
+* [What is Feature engineering](#Feature-engineering)
+* [Setup](#Setup)
+* [Handle missing values](#Handle-missing-values)
+* [Handle outliers](#Handle-outliers)
+* [Remove unnecessary variables](#Remove-unnecessary-variables)
+* [Encoding categorical variables](#Encoding-categorical-variables)
+* [Numerical transformation](#Numerical-transformation)
+* [Scaling numerical features](#Scaling-numerical-features)
+* [Extracting of date](#Extracting-of-date)
 <!--te-->
+
+## Aims and Objectives
+
+pilot is a package that aims to perform features engineering.
+
+## What is Feature engineering
+An optimal machine learning using python can't be build without features engineering.
+What is exactlly Features Engineering? 
+In order to select prominent variables for avoid issues such as overfitting, underfitting etc
+When we build machine learning models, it is suitable to consuming little bit time on feature engineering.
+Features engineering contains numerous types of technologies:
+        -Handle missing values 
+        -Handle outliers
+        -Remove unnecessary variables 
+        -Delete low-variance variables 
+        -Show Numerical and categorical variables
+        -Encoding categorical variables
+        -Numerical transformation 
+        -Scaling numerical features 
+        -Extracting of date
+              
+This technology will help you to have you hand on feature engineering and perform well the choice of prominent variables.
+## Setup
+
+## Handle missing values
+
+## Handle outliers
+
+## Remove unnecessary variables
+
+## Delete low-variance variables
+
+## Show Numerical and categorical variables
+
+## Encoding categorical variables
+
+## Numerical transformation 
+
+## Scaling numerical features 
+
+## Extracting of date
 
 ## License
 
