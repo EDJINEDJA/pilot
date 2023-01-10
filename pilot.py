@@ -220,7 +220,7 @@ class pilot( ):
         return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
 
 
-    def HandlMissingValues(data, strategy = "default"):
+    def HandlMissingValues(self, data, strategy = "default"):
         """
         Unprocessed data must be contain some missing values  
         Variables:
@@ -276,13 +276,3 @@ class pilot( ):
            data = data.interpolate(method ='pad')
     
         return data
-
-
-
-
-
-
-
-
-
-
