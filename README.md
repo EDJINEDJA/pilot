@@ -29,7 +29,7 @@
 <!--ts-->
 * [Aims and Objectives](#Aims-and-Objectives)
 * [What is Feature engineering](#Feature-engineering)
-* [Setup](#Setup)
+* [Usage](#Usage)
 * [Handle missing values](#Handle-missing-values)
 * [Handle outliers](#Handle-outliers)
 * [Remove unnecessary variables](#Remove-unnecessary-variables)
@@ -64,26 +64,34 @@ Features engineering contains numerous types of technologies:
               
 This technology will help you to have you hand on feature engineering and perform well the choice of prominent variables.
 
-## Setup
- 
-- requirement 
 
-Use the requirement file to install all mandatories modules to infer this tool in your virtual environment.
+# Usage
 
-pip install -r requirements.txt
+#### Install
 
 - git clone 
 
 Clone this repository in the main folder of your project to use pilot. 
 
-git clone https://github.com/EDJINEDJA/pilot
+```bash
+$ git clone https://github.com/EDJINEDJA/pilot
+```
+- requirements
 
-- Call package
+The toolkit support Python 3.10.6 
 
-import pilot 
+To install required packages use:
 
-from pilot import pilot 
+```bash
+$ pip3 install -r requirements.txt
+```
 
+#### pilot  usage
+
+```python
+$ import pilot 
+$ from pilot import pilot 
+```
 ## Handle missing values
 
 ## Handle outliers
