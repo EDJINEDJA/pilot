@@ -276,8 +276,3 @@ class pilot( ):
            data = data.interpolate(method ='pad')
     
         return data
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 1f0f1d74485c3fa72613b288c14828c20883fd83
