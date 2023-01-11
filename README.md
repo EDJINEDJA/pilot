@@ -29,7 +29,7 @@
 <!--ts-->
 * [Aims and Objectives](#Aims-and-Objectives)
 * [What is Feature engineering](#Feature-engineering)
-* [Setup](#Setup)
+* [Usage](#Usage)
 * [Handle missing values](#Handle-missing-values)
 * [Handle outliers](#Handle-outliers)
 * [Remove unnecessary variables](#Remove-unnecessary-variables)
@@ -41,27 +41,57 @@
 
 ## Aims and Objectives
 
-pilot is a package that aims to perform features engineering.
+pilot is a package that aims to perform feature engineering.
 
 ## What is Feature engineering
-An optimal machine learning using python can't be build without features engineering.
+An optimal machine learning using python can't be build without feature engineering.
+<br>
 What is exactlly Features Engineering? 
+<br>
 In order to select prominent variables for avoid issues such as overfitting, underfitting etc
 When we build machine learning models, it is suitable to consuming little bit time on feature engineering.
 Features engineering contains numerous types of technologies:
-        -Handle missing values 
-        -Handle outliers
-        -Remove unnecessary variables 
-        -Delete low-variance variables 
-        -Show Numerical and categorical variables
-        -Encoding categorical variables
-        -Numerical transformation 
-        -Scaling numerical features 
-        -Extracting of date
+
+- Handle missing values 
+- Handle outliers
+- Remove unnecessary variables 
+- Delete low-variance variables 
+- Show Numerical and categorical variables
+- Encoding categorical variables
+- Numerical transformation 
+- Scaling numerical features 
+- Extracting of date
               
 This technology will help you to have you hand on feature engineering and perform well the choice of prominent variables.
-## Setup
 
+
+# Usage
+
+#### Install
+
+- git clone 
+
+Clone this repository in the main folder of your project to use pilot. 
+
+```bash
+$ git clone https://github.com/EDJINEDJA/pilot
+```
+- requirements
+
+The toolkit support Python 3.10.6 
+
+To install required packages use:
+
+```bash
+$ pip3 install -r requirements.txt
+```
+
+#### pilot  usage
+
+```python
+$ import pilot 
+$ from pilot import pilot 
+```
 ## Handle missing values
 
 ## Handle outliers
