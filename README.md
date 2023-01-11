@@ -44,13 +44,14 @@
 pilot is a package that aims to perform feature engineering.
 
 ## What is Feature engineering
-An optimal machine learning using python can't be build without features engineering.
+An optimal machine learning using python can't be build without feature engineering.
 <br>
 What is exactlly Features Engineering? 
 <br>
 In order to select prominent variables for avoid issues such as overfitting, underfitting etc
 When we build machine learning models, it is suitable to consuming little bit time on feature engineering.
-- Features engineering contains numerous types of technologies:
+Features engineering contains numerous types of technologies:
+
 - Handle missing values 
 - Handle outliers
 - Remove unnecessary variables 
@@ -65,8 +66,10 @@ This technology will help you to have you hand on feature engineering and perfor
 
 ## Setup
  
-- requirement file
-Use the requirements file to install all mandatory modules to infer this tool in your virtual environment.
+- requirement 
+
+Use the requirement file to install all mandatories modules to infer this tool in your virtual environment.
+
 pip install -r requirements.txt
 
 - git clone 
@@ -78,6 +81,7 @@ git clone https://github.com/EDJINEDJA/pilot
 - Call package
 
 import pilot 
+
 from pilot import pilot 
 
 ## Handle missing values
