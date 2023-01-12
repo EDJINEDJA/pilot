@@ -43,7 +43,7 @@
 
 pilot is a package that aims to perform feature engineering.
 
-## What is Feature engineeringalign
+## What is Feature engineering
 An optimal machine learning using python can't be build without feature engineering.
 <br>
 What is exactlly Features Engineering? 
@@ -63,8 +63,6 @@ Features engineering contains numerous types of technologies:
 - Extracting of date
               
 This technology will help you to have you hand on feature engineering and perform well the choice of prominent variables.
-
-
 
 
 # Usage
@@ -91,19 +89,41 @@ $ pip3 install -r requirements.txt
 #### pilot  usage
 
 ```python
-$ import pilot 
+$ import pilot
+or  
 $ from pilot import pilot 
 ```
 ## Handle missing values
 <strong>Hadling missing values </strong> is an essential in feature engineering because all data in real life comes with some missing values.
-In general there is not an optimal way to handle missing values. because there is different types and charactiristics of the dataset, so either we can choose to Drop or Replace missing values.
+In general there is not an optimal way to handle missing values. because there is different types and charactiristics of the dataset.
+Indeed, there are several ways to handle missing values in a dataset, including:
 
-Delete Rows with Missing Values
+- Deleting rows or columns with missing data:
+This approach is simple and can work well if the amount of missing data is small. However, it can lead to a loss of information if a large portion of the data is removed.
 
-strategy = "default" ---> Delete Rows with Missing Values
-```python 
-pilot..HandlMisDelete Rows with Missing ValuessingValues(data,scalar = None, strategy = "default")
+To do that use strategy default
+
 ```
+```python
+$ import pilot 
+$ from pilot import pilot 
+$ pilot.HandlMissingValues(data=data,scalar = None strategy = "default")
+```
+-Imputing missing values:
+This method involves replacing missing values with estimates, such as the mean or median of the non-missing values. This approach can help to preserve the size of the dataset, but the imputed values are not always accurate.
+
+-Using a predictive model:
+A machine learning model can be trained to predict missing values based on the other features in the dataset. This approach can be more accurate than imputation, but it requires a sufficient amount of non-missing data to train the model.
+
+-Using a flag:
+Creating a new column which indicates whether a value is missing or not.
+
+
+-Using interpolation technique:
+replacing the missing value with the average of the value before and after the missing value.
+
+The best approach depends on the specific situation and the amount of missing data. It's also best to use multiple techniques and compare the results.
+
 ## Handle outliers
 
 ## Remove unnecessary variables
