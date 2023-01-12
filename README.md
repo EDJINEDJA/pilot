@@ -43,7 +43,7 @@
 
 pilot is a package that aims to perform feature engineering.
 
-## What is Feature engineering
+## What is Feature engineeringalign
 An optimal machine learning using python can't be build without feature engineering.
 <br>
 What is exactlly Features Engineering? 
@@ -98,9 +98,11 @@ $ from pilot import pilot
 <strong>Hadling missing values </strong> is an essential in feature engineering because all data in real life comes with some missing values.
 In general there is not an optimal way to handle missing values. because there is different types and charactiristics of the dataset, so either we can choose to Drop or Replace missing values.
 
+Delete Rows with Missing Values
 
+strategy = "default" ---> Delete Rows with Missing Values
 ```python 
-pilot..HandlMissingValues(data,scalar = None, strategy = "default")
+pilot..HandlMisDelete Rows with Missing ValuessingValues(data,scalar = None, strategy = "default")
 ```
 
 ## Handle outliers
