@@ -65,6 +65,8 @@ Features engineering contains numerous types of technologies:
 This technology will help you to have you hand on feature engineering and perform well the choice of prominent variables.
 
 
+
+
 # Usage
 
 #### Install
@@ -95,6 +97,11 @@ $ from pilot import pilot
 ## Handle missing values
 <strong>Hadling missing values </strong> is an essential in feature engineering because all data in real life comes with some missing values.
 In general there is not an optimal way to handle missing values. because there is different types and charactiristics of the dataset, so either we can choose to Drop or Replace missing values.
+
+
+```python 
+HandlMissingValues(self, data,scalar = None, strategy = "default")
+```
 
 ## Handle outliers
 

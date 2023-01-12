@@ -220,7 +220,7 @@ class pilot( ):
         return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
 
 
-    def HandlMissingValues(self, data, strategy = "default"):
+    def HandlMissingValues(self, data,scalar=None, strategy = "default"):
         """
         Unprocessed data must be contain some missing values  
         Variables:
@@ -248,9 +248,9 @@ class pilot( ):
             data = data.dropna(how='all')
         
         #  replace the missing value with some arbitrary value
-        #Filling missing values with 0
-        if strategy == "fill_zero": 
-            data = data.fillna(0)
+        #Filling missing values with a scalar
+        if strategy == "fill_scalar": 
+            data = data.fillna(scalar)
         #Filling Nan values with forward fill values
         if strategy == "fill_forward":
             data = data.fillna(method="ffill")
