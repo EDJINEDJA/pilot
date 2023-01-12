@@ -98,7 +98,7 @@ $ from pilot import pilot
 In general there is not an optimal way to handle missing values. because there is different types and charactiristics of the dataset.
 Indeed, there are several ways to handle missing values in a dataset, including:
 
-Deleting rows or columns with missing data:
+#### Deleting rows or columns with missing data:
 
 This approach is simple and can work well if the amount of missing data is small. However, it can lead to a loss of information if a large portion of the data is removed.
 
@@ -110,24 +110,24 @@ $ from pilot import pilot
 $ pilot.HandlMissingValues(data=data,scalar = None strategy = "default")
 ```
 
-Imputing missing values:
+#### Imputing missing values:
 
 This method involves replacing missing values with estimates, such as the mean or median of the non-missing values. This approach can help to preserve the size of the dataset, but the imputed values are not always accurate.
 
-Using a predictive model:
+#### Using a predictive model:
 
 A machine learning model can be trained to predict missing values based on the other features in the dataset. This approach can be more accurate than imputation, but it requires a sufficient amount of non-missing data to train the model.
 
-Using a flag:
+#### Using a flag:
 
 Creating a new column which indicates whether a value is missing or not.
 
-
-Using interpolation technique:
+#### Using interpolation technique:
 
 replacing the missing value with the average of the value before and after the missing value.
 
 The best approach depends on the specific situation and the amount of missing data. It's also best to use multiple techniques and compare the results.
+
 ## Handle outliers
 
 ## Remove unnecessary variables
