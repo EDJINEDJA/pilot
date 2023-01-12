@@ -110,7 +110,9 @@ $ from pilot import pilot
 $ pilot.HandlMissingValues(data=data,scalar = None strategy = "default")
 ```
 
+
 #### Imputing missing values:
+
 
 This method involves replacing missing values with estimates, such as the mean or median of the non-missing values. This approach can help to preserve the size of the dataset, but the imputed values are not always accurate.
 
