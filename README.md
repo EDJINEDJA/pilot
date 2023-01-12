@@ -105,6 +105,7 @@ $ import pilot
 $ from pilot import pilot 
 $ pilot.HandlMissingValues(data=data, strategy = "default")
 ```
+<<<<<<< HEAD
 
 Imputing missing values: This method involves replacing missing values with estimates, such as the mean or median of the non-missing values. This approach can help to preserve the size of the dataset, but the imputed values are not always accurate.
 
@@ -115,6 +116,9 @@ Using a flag: Creating a new column which indicates whether a value is missing o
 Using interpolation technique: replacing the missing value with the average of the value before and after the missing value.
 
 The best approach depends on the specific situation and the amount of missing data. It's also best to use multiple techniques and compare the results.
+=======
+hhhhhhhh
+>>>>>>> 462e51c58df56e66657925f3aa6419f23228a5c3
 ## Handle outliers
 
 ## Remove unnecessary variables
