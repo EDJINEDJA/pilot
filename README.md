@@ -93,6 +93,8 @@ $ import pilot
 $ from pilot import pilot 
 ```
 ## Handle missing values
+<strong>Hadling missing values </strong> is an essential in feature engineering because all data in real life comes with some missing values.
+In general there is not an optimal way to handle missing values. because there is different types and charactiristics of the dataset, so either we can choose to Drop or Replace missing values.
 
 ## Handle outliers
 
