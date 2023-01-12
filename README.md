@@ -104,7 +104,6 @@ strategy = "default" ---> Delete Rows with Missing Values
 ```python 
 pilot..HandlMisDelete Rows with Missing ValuessingValues(data,scalar = None, strategy = "default")
 ```
-hhhhhhhh
 ## Handle outliers
 
 ## Remove unnecessary variables
