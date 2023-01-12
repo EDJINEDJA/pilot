@@ -103,24 +103,24 @@ This approach is simple and can work well if the amount of missing data is small
 
 To do that use strategy default
 
-```
+
 ```python
 $ import pilot 
 $ from pilot import pilot 
 $ pilot.HandlMissingValues(data=data,scalar = None strategy = "default")
 ```
 
--Imputing missing values:
+- Imputing missing values:
 This method involves replacing missing values with estimates, such as the mean or median of the non-missing values. This approach can help to preserve the size of the dataset, but the imputed values are not always accurate.
 
--Using a predictive model:
+- Using a predictive model:
 A machine learning model can be trained to predict missing values based on the other features in the dataset. This approach can be more accurate than imputation, but it requires a sufficient amount of non-missing data to train the model.
 
--Using a flag:
+- Using a flag:
 Creating a new column which indicates whether a value is missing or not.
 
 
--Using interpolation technique:
+- Using interpolation technique:
 replacing the missing value with the average of the value before and after the missing value.
 
 The best approach depends on the specific situation and the amount of missing data. It's also best to use multiple techniques and compare the results.
