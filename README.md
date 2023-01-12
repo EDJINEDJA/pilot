@@ -100,7 +100,7 @@ In general there is not an optimal way to handle missing values. because there i
 
 
 ```python 
-HandlMissingValues(self, data,scalar = None, strategy = "default")
+pilot..HandlMissingValues(data,scalar = None, strategy = "default")
 ```
 
 ## Handle outliers
