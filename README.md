@@ -104,15 +104,13 @@ This approach is simple and can work well if the amount of missing data is small
 
 To do that use strategy default
 
-
 ```python
 $ from pilot import pilot 
-$ pilot.HandlMissingValues(data=data,scalar = None strategy = "default")
+$ pilot.HandlMissingValues(data=data, scalar = 0 , strategy = "default")
 ```
 
 
 #### Imputing missing values:
-
 
 This method involves replacing missing values with estimates, such as the mean or median of the non-missing values. This approach can help to preserve the size of the dataset, but the imputed values are not always accurate.
 
@@ -131,6 +129,20 @@ replacing the missing value with the average of the value before and after the m
 The best approach depends on the specific situation and the amount of missing data. It's also best to use multiple techniques and compare the results.
 
 ## Handle outliers
+### Z-score 
+
+The Z-score method, also known as the standard score method, is a statistical method used to detect outliers in a dataset. It compares each data point to the mean and standard deviation of the dataset, and assigns a Z-score to each point. Z-scores are a measure of how many standard deviations a data point is from the mean. A Z-score of 0 indicates that the data point is exactly on the mean, a Z-score of 1 indicates that the data point is 1 standard deviation above the mean, and a Z-score of -1 indicates that the data point is 1 standard deviation below the mean. Data points with Z-scores outside of a certain range (such as +/- 3 standard deviations) are considered outliers.
+This method assumes that the data is normally distributed. If the data is not normally distributed, this method may not be appropriate.
+
+```python
+$ from pilot import pilot 
+$ pilot.checkOutliersZscore(data=data)
+```
+### Percentille
+
+The Percentile method is a statistical method used to identify outliers in a dataset. A percentile is a value below which a certain percent of the observations fall. For example, the 90th percentile is the value below which 90% of the observations fall. Percentiles can be used to define thresholds for identifying outliers. For example, if we consider all observations above the 95th percentile as outliers, then we can identify data points that are significantly higher than the majority of the observations in the dataset.
+It is a simple and widely used method to detect outliers, especially when the data is not normally distributed. It is useful when the distribution of data is skewed, as it is not affected by the skewness.
+This method can
 
 ## Remove unnecessary variables
 
@@ -149,5 +161,3 @@ The best approach depends on the specific situation and the amount of missing da
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-

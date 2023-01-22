@@ -102,7 +102,7 @@ class pilot( ):
         print("Unnecessary Columns removed")
 
 
-    def checkOutliers(self, data):
+    def checkOutliersZscore(self, data):
 
         """
             Outliers values engineering 
@@ -118,6 +118,9 @@ class pilot( ):
             z-score_ij > 3 mean that X_ij is not an outlier values.
         """
         ind_num = np.isin(data.dtypes,['int16','int32','int64','float64','float16','float32'])
+
+        if len(self.Columns()) != len(ind_num) :
+            raise "../ warning: detects categorical variables and does not take care of them."
 
         data=data.iloc[:,ind_num]
 
@@ -220,7 +223,7 @@ class pilot( ):
         return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
 
 
-    def HandlMissingValues(self, data,scalar=None, strategy = "default"):
+    def HandlMissingValues(self, data , scalar = None , strategy = "default"):
         """
         Unprocessed data must be contain some missing values  
         Variables:
@@ -251,9 +254,10 @@ class pilot( ):
         #Filling missing values with a scalar
         if strategy == "fill_scalar": 
             data = data.fillna(scalar)
+
         #Filling Nan values with forward fill values
         if strategy == "fill_forward":
-            data = data.fillna(method="ffill")
+            data = data.fillna( method="ffill")
 
         # Filling NaN values in Backward Direction
         if strategy == "fill_backward":
