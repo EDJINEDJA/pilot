@@ -144,8 +144,43 @@ The Percentile method is a statistical method used to identify outliers in a dat
 It is a simple and widely used method to detect outliers, especially when the data is not normally distributed. It is useful when the distribution of data is skewed, as it is not affected by the skewness.
 This method can
 
-## Remove unnecessary variables
-If 
+## Features selection
+## Correlation-based feature selection
+This method involves calculating the correlation between each feature and the target variable, and then removing the features that have a low correlation with the target variable.
+
+```python
+$ from pilot import featuresSelection
+$ parser=featuresSelection( "your data" )
+$ parser.UnivariateFeatureSelection(target = 'icd9_code' , K=6)
+```
+### Univariate feature selection
+This method uses statistical tests to select the best features based on their individual relevance to the target variable
+
+```python
+$ from pilot import featuresSelection
+$ parser=featuresSelection( "your data" )
+$ parser.UnivariateFeatureSelection(target = "decision" , K =6 , strategy  = "default")
+
+If strategy  = "default" UnivariateFeatureSelection use as scaled methode StandardScaler
+
+for MinMaxScaler please use  strategy  = "MinMaxScaler"
+
+for MaxAbsScaler please use  strategy  = "MaxAbsScaler"
+```
+### Recursive feature elimination
+This method uses a model to recursively remove features, building the model with the remaining features at each iteration.
+
+```python
+$ from pilot import featuresSelection
+$ parser=featuresSelection( "your data" )
+$ parser.RecursiveFeatureElimination(self  , target = "decision" , K =6 , strategy  = "default")
+```
+If strategy  = "default" RecursiveFeatureElimination use as scaled methode StandardScaler
+
+for MinMaxScaler please use  strategy  = "MinMaxScaler"
+
+for MaxAbsScaler please use  strategy  = "MaxAbsScaler"
+
 ## Delete low-variance variables
 
 ## Show Numerical and categorical variables
