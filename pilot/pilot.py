@@ -278,7 +278,7 @@ class featuresSelection():
 
 
 
-class pilot( ):
+class MissingValues( ):
 
     def __init__(self , data : pd.core.frame.DataFrame) -> None:
         
@@ -339,7 +339,13 @@ class pilot( ):
         print(f"____Categorical variables : {categoricalV} ___")
 
 
+class Outliers( ):
 
+    def __init__(self , data : pd.core.frame.DataFrame) -> None:
+        
+        #Initialization
+        self.data  =  data
+        self.columns =data.columns
 
     def checkOutliers(self, strategy : str = "default"):
 
@@ -375,41 +381,6 @@ class pilot( ):
                 print(" _______ No outliers in the columns _____ ")
             else:
                 print(f"_______outliers columns : {outliersCol}_______")
-
-        
-    
-    def Ordinal2numerical(self,ordinalColumns,data):
-        """
-          It is important to know which encoder used depending on the type of categorical variable we have.
-          Ordinal2numerical is used to encoder only ordinal variable:
-          Indeed Ordinal variable do not have an inherent order
-        """
-        print("Make sure that ordinalColumns contains only ordinal variables")
-        print("This tools use dummy encoder wich better than one-hot-encoding encoder")
-        print("If you prefer one-hot-encoding use Ordinal2numericalBeta")
-        
-        columns= data.columns
-        dataCategorical=pd.get_dummies(data[ordinalColumns],dummy_na=True)
-        remainderV=set(columns)-set(ordinalColumns)
-
-        return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
-    
-    def nominal2numerical(self,nominalColumns,data):
-        """
-          It is important to know which encoder used depending on the type of categorical variable we have.
-          nominal2numerical is used to encoder only nominal variable:
-          Indeed nominal variable have an inherent order
-        """
-        print("Make sure that nominalColumns contains only nominal variables")
-        print("This tools use Label encoder ")
-
-        columns= data.columns
-        dataCategorical=data[nominalColumns].apply(LabelEncoder().fit_transform)
-        remainderV=set(columns)-set(nominalColumns)
-
-        return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
-
-
     def HandlMissingValues(self, data , scalar = None , strategy = "default"):
         """
         Unprocessed data must be contain some missing values  
@@ -467,3 +438,51 @@ class pilot( ):
            data = data.interpolate(method ='pad')
     
         return data
+
+
+        
+
+
+class Encoding( ):
+
+    def __init__(self , data : pd.core.frame.DataFrame) -> None:
+        
+        #Initialization
+        self.data  =  data
+        self.columns =data.columns
+    
+ 
+
+    def Ordinal2numerical(self,ordinalColumns,data):
+        """
+          It is important to know which encoder used depending on the type of categorical variable we have.
+          Ordinal2numerical is used to encoder only ordinal variable:
+          Indeed Ordinal variable do not have an inherent order
+        """
+        print("Make sure that ordinalColumns contains only ordinal variables")
+        print("This tools use dummy encoder wich better than one-hot-encoding encoder")
+        print("If you prefer one-hot-encoding use Ordinal2numericalBeta")
+        
+        columns= data.columns
+        dataCategorical=pd.get_dummies(data[ordinalColumns],dummy_na=True)
+        remainderV=set(columns)-set(ordinalColumns)
+
+        return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
+    
+    def nominal2numerical(self,nominalColumns,data):
+        """
+          It is important to know which encoder used depending on the type of categorical variable we have.
+          nominal2numerical is used to encoder only nominal variable:
+          Indeed nominal variable have an inherent order
+        """
+        print("Make sure that nominalColumns contains only nominal variables")
+        print("This tools use Label encoder ")
+
+        columns= data.columns
+        dataCategorical=data[nominalColumns].apply(LabelEncoder().fit_transform)
+        remainderV=set(columns)-set(nominalColumns)
+
+        return pd.concat([data[list(remainderV)],dataCategorical], axis = 1)
+
+
+   

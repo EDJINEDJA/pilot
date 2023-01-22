@@ -160,26 +160,28 @@ This method uses statistical tests to select the best features based on their in
 $ from pilot import featuresSelection
 $ parser=featuresSelection( "your data" )
 $ parser.UnivariateFeatureSelection(target = "decision" , K =6 , strategy  = "default")
+```
 
 If strategy  = "default" UnivariateFeatureSelection use as scaled methode StandardScaler
 
 for MinMaxScaler please use  strategy  = "MinMaxScaler"
 
 for MaxAbsScaler please use  strategy  = "MaxAbsScaler"
-```
+
 ### Recursive feature elimination
 This method uses a model to recursively remove features, building the model with the remaining features at each iteration.
 
 ```python
 $ from pilot import featuresSelection
 $ parser=featuresSelection( "your data" )
-$ parser.RecursiveFeatureElimination(self  , target = "decision" , K =6 , strategy  = "default")
+$ parser.RecursiveFeatureElimination(target = "decision" , K =6 , strategy  = "default")
 ```
 If strategy  = "default" RecursiveFeatureElimination use as scaled methode StandardScaler
 
 for MinMaxScaler please use  strategy  = "MinMaxScaler"
 
 for MaxAbsScaler please use  strategy  = "MaxAbsScaler"
+
 
 ## Delete low-variance variables
 
