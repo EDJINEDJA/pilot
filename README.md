@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/EDJINEDJA/pilot">
-        <img src="https://github.com/EDJINEDJA/pilot/blob/main/hands.png" alt="Pilot">
+        <img src="https://github.com/EDJINEDJA/pilot/blob/main/Img/hands.png" alt="Pilot">
     </a> 
 <br>
 
@@ -145,7 +145,7 @@ It is a simple and widely used method to detect outliers, especially when the da
 This method can
 
 ## Remove unnecessary variables
-
+If 
 ## Delete low-variance variables
 
 ## Show Numerical and categorical variables

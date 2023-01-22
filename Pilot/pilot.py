@@ -27,6 +27,8 @@ from sklearn.feature_selection import VarianceThreshold
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.preprocessing import normalize
 import pandas as pd 
+import numpy as np
+
 
 class pilot( ):
 
@@ -37,7 +39,7 @@ class pilot( ):
     def Columns(data):
         return data.columns
 
-    def checkMissingValues(self, data):
+    def checkMissingValues(self, data : pd.core.frame.DataFrame):
         """  
             Check missing values
             What is missing values?
@@ -63,7 +65,7 @@ class pilot( ):
             print( text + f" contains {percentageMV}% of missing values.")
 
 
-    def checkDtypes(self,data):
+    def checkDtypes(self,data : pd.core.frame.DataFrame):
         """
            The overall structre of data is 
                -Numerical variable
@@ -91,18 +93,30 @@ class pilot( ):
         print(f"____Numerical variables : {categoricalV} ___")
 
     
-    def removeUnnecessaryColumns(self,data,UnnecessaryColumns):
+    def CorrelationBasedFeatureSelection(self, data : pd.core.frame.DataFrame, treshold : float = 0.95 ):
 
         """
+            Correlation-based feature selection
             Sometimes we quickly deduce that our data contains unnecessary variables (eg : date) and we decide to drop it.
         """
+        # Calculate the correlation matrix
+        corr_matrix = data.corr()
 
-        data.drop(UnnecessaryColumns, axis=1, inplace=True)
+        # Select upper triangle of correlation matrix
+        upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(np.bool))
 
-        print("Unnecessary Columns removed")
+        # Find index of feature columns with correlation greater than a threshold (e.g. 0.95)
+        to_drop = [column for column in upper.columns if any(upper[column] > treshold)]
+
+        # Drop the correlated columns from the DataFrame
+        data.drop(data[to_drop], axis=1 , inplace = True)
+
+        raise " ../ Unnecessary feature removed "
+
+        return data
 
 
-    def checkOutliersZscore(self, data):
+    def checkOutliers(self, data : pd.core.frame.DataFrame , strategy : str = "default"):
 
         """
             Outliers values engineering 
@@ -118,26 +132,27 @@ class pilot( ):
             z-score_ij > 3 mean that X_ij is not an outlier values.
         """
         ind_num = np.isin(data.dtypes,['int16','int32','int64','float64','float16','float32'])
-
+        data=data.iloc[:,ind_num]
+        
         if len(self.Columns()) != len(ind_num) :
             raise "../ warning: detects categorical variables and does not take care of them."
+       
+        if strategy == "default":
 
-        data=data.iloc[:,ind_num]
+            treshold = 3
 
-        treshold = 3
+            outliersDict={keys : [item  for item in data[keys] if np.abs((item - np.mean(data[keys]))/np.std(data[keys]))>treshold] for keys in data.columns}
 
-        outliersDict={keys : [item  for item in data[keys] if np.abs((item - np.mean(data[keys]))/np.std(data[keys]))>treshold] for keys in data.columns}
+            outliersCol=[keys for (keys , values) in outliersDict.items() if len(values)!=0]
+        
 
-        outliersCol=[keys for (keys , values) in outliersDict.items() if len(values)!=0]
-      
-
-        if len(outliersCol) == 0:
-            print(" _______ No outliers in the columns _____ ")
-        else:
-            print(f"_______outliers columns : {outliersCol}_______")
+            if len(outliersCol) == 0:
+                print(" _______ No outliers in the columns _____ ")
+            else:
+                print(f"_______outliers columns : {outliersCol}_______")
 
         
-    def checkLowVariance(self, data,threshold):
+    def checkLowVariance(self, data : pd.core.frame.DataFrame , threshold : str):
 
         """
            Variance tells us about the spread of the data.
