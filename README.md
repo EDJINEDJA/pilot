@@ -142,8 +142,58 @@ $ parser.checkLowVarianceColumns(threshold  = 0.05)
 ### Correlation based feature selection
 Correlation based feature selection is a method used in machine learning to select the most relevant features for a given dataset. It works by analyzing the correlation between each feature and the target variable and selecting the features that have the highest correlation with the target. This can help to reduce the dimensionality of the dataset, improve the performance of the model, and reduce overfitting. The most common method for correlation-based feature selection is Pearson correlation coefficient, but other methods like Mutual Information, Kendall rank correlation coefficient, and Spearman rank correlation coefficient also can be used.
 
-### Correlation based feature selection (pearson correlation)
+strategy = "default" don't use target feature.
+
+```python
+$ from pilot import FeaturesTypes
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ parser = FeaturesSelection(data)
+$ data = parser.CorrelationBasedFeatureSelection(treshold  = 0.95 , K=4  , strategy="default")
+```
+
+#### Correlation based feature selection (pearson correlation)
 Correlation-based feature selection is a method of selecting features for a model based on the correlation between the features and the target variable. The Pearson correlation coefficient is a measure of the linear correlation between two variables. In Python, this can be calculated using the pearsonr function from the scipy library.
+
+```python
+$ from pilot import FeaturesTypes
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ parser = FeaturesSelection(data)
+$ data = parser.CorrelationBasedFeatureSelection(treshold  = 0.95 , K=4  , strategy="pearson" , target = "icd9_code")
+```
+####  feature selection 
+Use SelectKBest wich  is a feature selection method
+```python
+$ from pilot import FeaturesTypes
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ parser = FeaturesSelection(data)
+$ parser.CorrelationBasedFeatureSelection(treshold  = 0.95 , K=4  , scale="default", strategy="simple", target="icd9_code")
+```
+
+####  Correlation based feature selection (Kendall correlation)
+
+Kendall rank correlation coefficient is a non-parametric measure of association that can be used for correlation based feature selection in Python using the Pandas library. The Kendall rank correlation coefficient, denoted by τ, is a measure of the ordinal association between two variables.
+It ranges from -1 to 1, where -1 represents a perfect negative correlation, 0 represents no correlation, and 1 represents a perfect positive correlation.
+
+```python
+$ from pilot import FeaturesTypes
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ parser = FeaturesSelection(data)
+$ parser.CorrelationBasedFeatureSelection(treshold  = 0.95 , K=4  , scale="default", strategy="kendalltau", target="icd9_code" )
+```
+####  Correlation based feature selection (spearmanr correlation)
+The Spearman rank correlation coefficient is a measure of the correlation between two variables that is based on the ranks of the data rather than the actual values.
+
+```python
+$ from pilot import FeaturesTypes
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ parser = FeaturesSelection(data)
+$ parser.featureSelection(self , K = 4, target  = "icd9_code", scale = "StandardScaler")
+```
 
 ## Handle missing values
 <strong> Hadling missing values </strong> is an essential in feature engineering because all data in real life comes with some missing values.
