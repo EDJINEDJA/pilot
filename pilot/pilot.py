@@ -32,16 +32,76 @@ from sklearn.feature_selection import RFE
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MaxAbsScaler
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.linear_model import LinearRegression
-
-       
+from sklearn.linear_model import LinearRegression 
 import pandas as pd 
 import numpy as np
 from typing import List
-
 from prettytable import PrettyTable
 
-class featuresSelection():
+
+class FeaturesTypes( ):
+
+    def __init__(self , data : pd.core.frame.DataFrame) -> None:
+        
+        #Initialization
+        self.data  =  data
+        self.columns =data.columns
+   
+    def checkDtypes(self) -> None:
+        """
+           The overall structre of data is 
+               -Numerical variable
+               -Categorical variable (nominal and ordinal)
+                  Numerical variable have type int and float while the categorical have type string and stratified in two categories 
+                   * Nominal variable and 
+                   * Ordinal variable 
+                      Nominal variable are the string object (leg: name of personne yes or no etc )
+                      while Ordinal variable is a string wich have order relation 
+            To have highlight insight of wether the variable is categoricla or numerical can help us 
+            to know wich variable we are going to transform.
+        """
+
+        ind_num = np.isin(self.data.dtypes,['int16','int32','int64','float64','float16','float32'])
+
+        indexCV=[i for i , b in enumerate(list(ind_num)) if b==False]
+
+        
+        categoricalV= [self.columns[index] for index in indexCV]
+
+        NumericalV=list(set(self.columns)-set(categoricalV))
+
+        if (len(categoricalV) != len(NumericalV)):
+            nbrRemainderValues = abs (len(categoricalV) - len(NumericalV))
+
+            for i in range(nbrRemainderValues):
+                categoricalV.append("NaN")
+
+        # Create a new table
+        table = PrettyTable()
+
+        # Add some rows to the table
+        
+        # Use this statement to add columns 
+        table.add_column("Numerical features" , NumericalV )
+        table.add_column("Categorical features" , categoricalV )
+
+        # string len 
+        strLen = len(" ../ show 4 rows of your data")
+        
+        # Print the table
+        print("+" + 2*strLen * "-" + "+")
+        print(" ../ show us 4 rows of our data")
+        print("+" + 2*strLen * "-" + "+")
+        print(self.data.head(4))
+        print("+" + len("../ This is the set of attributes of your dataset, classified according to their type.") * "-" + "+")
+        print("../ This is the set of attributes of your dataset, classified according to their type.")
+        print("+" + len("../ This is the set of attributes of your dataset, classified according to their type.") * "-" + "+")
+        print(table)
+        
+       
+       
+
+class FeaturesSelection():
     def __init__(self , data : pd.core.frame.DataFrame) -> None:
         
         #Initialization
@@ -50,7 +110,7 @@ class featuresSelection():
 
 
     @staticmethod
-    def encode_data( data : pd.core.frame.DataFrame):
+    def encode_data( data : pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
         """
            Define a function to encode the data
         """
@@ -62,7 +122,7 @@ class featuresSelection():
         return data
 
 
-    def checkLowVariance(self, threshold : str = 0.05):
+    def checkLowVariance(self, threshold : float = 0.05) -> None:
 
         """
            Variance tells us about the spread of the data.
@@ -100,7 +160,8 @@ class featuresSelection():
             print(" _______ Certains Features have low-variance _____ ")
             print("+" + strLen * "-" + "+")
 
-    def checkLowVarianceColumns(self, threshold):
+
+    def checkLowVarianceColumns(self, treshold : float = 0.05) -> None:
         """
            This tools helps us to know the low variance variable 
         """
@@ -121,7 +182,7 @@ class featuresSelection():
         columns = data.columns
 
         #saving the names of variables having variance more than a threshold value
-        variable = [columns[i] for i in range(0,len(variance)) if variance[i]>=threshold]
+        variable = [columns[i] for i in range(0,len(variance)) if variance[i]>=treshold]
         
 
         if len(variable ) == 0:
@@ -130,16 +191,17 @@ class featuresSelection():
             print("  _______ No Features have low-variance _____ ")
             print("+" + strLen * "-" + "+")
         else:
-            strLen = len("_______low-variance columns : {variable}_______")
+            strLen = len("_______ low-variance columns : {variable} _______")
             print("+" + strLen * "-" + "+")
-            print(f"_______low-variance columns : {variable}_______")
+            print(f"_______ low-variance columns : {variable}_______")
             print("+" + strLen * "-" + "+")
 
 
-    def CorrelationBasedFeatureSelection(self, treshold : float = 0.95 ):
+    def CorrelationBasedFeatureSelection(self, treshold : float = 0.95 ) -> pd.core.frame.DataFrame:
 
         """
             Correlation-based feature selection
+
             Sometimes we quickly deduce that our data contains unnecessary variables (eg : date) and we decide to drop it.
         """
         # copy the dataframe
@@ -190,7 +252,7 @@ class featuresSelection():
        
         return data
 
-    def UnivariateFeatureSelection(self , target : str , K : int , strategy : str = "default"):
+    def UnivariateFeatureSelection(self , target : str , K : int , strategy : str = "default") -> np.ndarray:
         """
            This method uses statistical tests to select the best features based on their individual relevance to the target variable
         """
@@ -200,6 +262,8 @@ class featuresSelection():
 
         # Load data
         data =  self.encode_data(self.data)
+
+        X= data.drop(target , axis =1)
        
         if strategy == "default" or "StandardScaler":
                 # Instantiate the StandardScaler
@@ -225,10 +289,9 @@ class featuresSelection():
 
         
         # Select the top K features
-        
         selector = SelectKBest(f_regression, k=K).fit(X, y)
         X_new = selector.transform(X)
-
+       
         return X_new
 
     def  RecursiveFeatureElimination(self  , target : str , K : int , strategy : str = "default"):
@@ -312,75 +375,6 @@ class MissingValues( ):
             print( text + f" contains {percentageMV}% of missing values.")
 
 
-    def checkDtypes(self):
-        """
-           The overall structre of data is 
-               -Numerical variable
-               -Categorical variable (nominal and ordinal)
-                  Numerical variable have type int and float while the categorical have type string and stratified in two categories 
-                   * Nominal variable and 
-                   * Ordinal variable 
-                      Nominal variable are the string object (leg: name of personne yes or no etc )
-                      while Ordinal variable is a string wich have order relation 
-            To have highlight insight of wether the variable is categoricla or numerical can help us 
-            to know wich variable we are going to transform.
-        """
-
-        ind_num = np.isin(self.data.dtypes,['int16','int32','int64','float64','float16','float32'])
-
-        indexCV=[i for i, b in enumerate(list(ind_num)) if b==False]
-
-        
-        categoricalV= [self.columns[index] for index in indexCV]
-
-        NumericalV=set(self.columns)-set(categoricalV)
-
-        print(f"____Numerical variables : {list(NumericalV)} ____")
-        print(f"____Categorical variables : {categoricalV} ___")
-
-
-class Outliers( ):
-
-    def __init__(self , data : pd.core.frame.DataFrame) -> None:
-        
-        #Initialization
-        self.data  =  data
-        self.columns =data.columns
-
-    def checkOutliers(self, strategy : str = "default"):
-
-        """
-            Outliers values engineering 
-            To determine whether the data contain outliers, we use the following techniques
-
-            1- Z-score 
-            2- Percentille 
-            In our side, we use Z-score wich is formalise as follow:for each variable denote X_j we perform the mean and the variance 
-            z-score of each value X_ij of X_j is: |X_ij-mean/var(Xj)|
-            We use the third standard deviation as treshold
-            All value which have z-score fall outside the treshold is considered to be a outlier values.
-            eg: if the treshold=3 and we have the equality as follow
-            z-score_ij > 3 mean that X_ij is not an outlier values.
-        """
-        ind_num = np.isin(data.dtypes,['int16','int32','int64','float64','float16','float32'])
-        data=self.data.iloc[:,ind_num]
-        
-        if len(self.columns) != len(ind_num) :
-            raise "../ warning: detects categorical variables and does not take care of them."
-       
-        if strategy == "default":
-
-            treshold = 3
-
-            outliersDict={keys : [item  for item in data[keys] if np.abs((item - np.mean(data[keys]))/np.std(data[keys]))>treshold] for keys in data.columns}
-
-            outliersCol=[keys for (keys , values) in outliersDict.items() if len(values)!=0]
-        
-
-            if len(outliersCol) == 0:
-                print(" _______ No outliers in the columns _____ ")
-            else:
-                print(f"_______outliers columns : {outliersCol}_______")
     def HandlMissingValues(self, data , scalar = None , strategy = "default"):
         """
         Unprocessed data must be contain some missing values  
@@ -440,18 +434,63 @@ class Outliers( ):
         return data
 
 
-        
+    
 
-
-class Encoding( ):
+class Outliers( ):
 
     def __init__(self , data : pd.core.frame.DataFrame) -> None:
         
         #Initialization
         self.data  =  data
         self.columns =data.columns
+
+    def checkOutliers(self, strategy : str = "default"):
+
+        """
+            Outliers values engineering 
+            To determine whether the data contain outliers, we use the following techniques
+
+            1- Z-score 
+            2- Percentille 
+            In our side, we use Z-score wich is formalise as follow:for each variable denote X_j we perform the mean and the variance 
+            z-score of each value X_ij of X_j is: |X_ij-mean/var(Xj)|
+            We use the third standard deviation as treshold
+            All value which have z-score fall outside the treshold is considered to be a outlier values.
+            eg: if the treshold=3 and we have the equality as follow
+            z-score_ij > 3 mean that X_ij is not an outlier values.
+        """
+        ind_num = np.isin(data.dtypes,['int16','int32','int64','float64','float16','float32'])
+        data=self.data.iloc[:,ind_num]
+        
+        if len(self.columns) != len(ind_num) :
+            raise "../ warning: detects categorical variables and does not take care of them."
+       
+        if strategy == "default":
+
+            treshold = 3
+
+            outliersDict={keys : [item  for item in data[keys] if np.abs((item - np.mean(data[keys]))/np.std(data[keys]))>treshold] for keys in data.columns}
+
+            outliersCol=[keys for (keys , values) in outliersDict.items() if len(values)!=0]
+        
+
+            if len(outliersCol) == 0:
+                print(" _______ No outliers in the columns _____ ")
+            else:
+                print(f"_______outliers columns : {outliersCol}_______")
     
- 
+
+        
+
+
+class Encoding(FeaturesSelection):
+
+    def __init__(self , data : pd.core.frame.DataFrame) -> None:
+        super(self).__init__(data)
+       
+    def Data2numerical(self):
+        return self.encode_data(self.data)
+
 
     def Ordinal2numerical(self,ordinalColumns,data):
         """

@@ -93,8 +93,43 @@ $ import pilot
 or  
 $ from pilot import pilot 
 ```
+
+## Types of Features
+First of all, it is important to know the types of variables. 
+
+The overall structre of data is 
+- Numerical variable
+- Categorical variable (nominal and ordinal)
+Numerical variable have type int and float while the categorical have type string or object and stratified in two categories 
+    - Nominal variable and 
+    - Ordinal variable 
+Nominal variable are the string object (eg: name of personne yes or no etc )
+While Ordinal variable is a string wich have order relation 
+To have highlight insight of wether the variable is categorical or numerical can help your to know wich variable we are going to transform.
+
+```python
+$ from pilot import FeaturesTypes
+
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ parser = FeaturesTypes(data)
+$ parser.checkDtypes()
+```
+
+## Features selection
+### checkLowVariance
+Variance is an empirical metric used to mesure dispersion of the values of a sample or of a probability distribution.
+The variance is the square of the type of deviation
+
+```python
+$ from pilot import FeaturesTypes
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ parser = FeaturesSelection(data)
+$ parser.checkLowVariance(threshold  = 0.05)
+```
 ## Handle missing values
-<strong>Hadling missing values </strong> is an essential in feature engineering because all data in real life comes with some missing values.
+<strong> Hadling missing values </strong> is an essential in feature engineering because all data in real life comes with some missing values.
 In general there is not an optimal way to handle missing values. because there is different types and charactiristics of the dataset.
 Indeed, there are several ways to handle missing values in a dataset, including:
 
