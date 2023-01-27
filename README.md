@@ -195,6 +195,26 @@ $ parser = FeaturesSelection(data)
 $ parser.featureSelection(self , K = 4, target  = "icd9_code", scale = "StandardScaler")
 ```
 
+####  feature selection 
+Use SelectKBest wich  is a feature selection method
+```python
+$ from pilot import FeaturesTypes
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ parser = FeaturesSelection(data)
+$ parser.CorrelationBasedFeatureSelection(treshold  = 0.95 , K=4  , scale="default", strategy="simple", target="icd9_code")
+```
+####  feature selection (Recursive Feature Elimination)
+Recursive Feature Elimination (RFE) is a feature selection method that is implemented in the sklearn.feature_selection library in Python. It works by recursively removing the least important features from the dataset based on a specific estimator.
+
+```python
+$ from pilot import FeaturesTypes
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ parser = FeaturesSelection(data)
+$ parser.RecursiveFeatureElimination(target = "icd9_code" , K = 5 , scale  = "default")
+```
+
 ## Handle missing values
 <strong> Hadling missing values </strong> is an essential in feature engineering because all data in real life comes with some missing values.
 In general there is not an optimal way to handle missing values, because there is different types and charactiristics of the dataset.

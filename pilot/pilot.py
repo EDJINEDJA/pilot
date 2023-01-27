@@ -480,7 +480,7 @@ class FeaturesSelection():
     
         return X_new    
 
-    def  RecursiveFeatureElimination(self  , target : str , K : int , strategy : str = "default"):
+    def  RecursiveFeatureElimination(self  , target : str =" ", K : int = 5, scale : str = "default"):
 
         """
            This method uses a model to recursively remove features, building the model with the remaining features at each iteration.
@@ -494,13 +494,13 @@ class FeaturesSelection():
        
         X = np.array(data.drop(target, axis=1))
 
-        if strategy == "default" or "StandardScaler":
+        if scale == "default" or "StandardScaler":
             # Instantiate the StandardScaler
             scaler = StandardScaler()
 
             # Scale the data
             X= scaler.fit_transform(X)
-        elif strategy == "MinMaxScaler":
+        elif scale == "MinMaxScaler":
             # Instantiate the MinMaxScaler
             scaler = MinMaxScaler(feature_range=(0, 1))
 
@@ -546,9 +546,11 @@ class MissingValues( ):
 
         NanColumns =  [item for item in self.columns if self.data[item].isna().sum().sum()!=0]
         percentageMV=self.data.isnull().sum()/len(self.data)*100
+       
 
         if len(NanColumns) == 0 :
-            return " _______ No missing values in the data |-- {percentageMV}% missing values --|_____ "
+            return f" _______ No missing values in the data _____ "
+            
         else : 
             text="--"
             for item in  NanColumns:
@@ -558,7 +560,7 @@ class MissingValues( ):
             print( text + f" contains {percentageMV}% of missing values.")
 
 
-    def HandlMissingValues(self, data , scalar = None , strategy = "default"):
+    def HandlMissingValues(self, scalar = None , strategy = "default"):
         """
         Unprocessed data must be contain some missing values  
         Variables:
@@ -579,8 +581,9 @@ class MissingValues( ):
         strategy = "interpolate_line"  ---> forward Method
         strategy = "interpolate_bline"  ---> Backward Direction
         strategy = "interpolate_pad"  ---> Interpolation through Padding
-        
         """
+
+        data = self.data.copy()
         # delete all missing values 
         if strategy == "default":
             data = data.dropna(how='all')
