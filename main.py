@@ -9,5 +9,5 @@ if __name__ =="__main__":
     data= pd.read_csv(filepath_or_buffer="/home/lnit/pilot/DIAGNOSES_ICD.csv" , sep = ",")
     
     parser = FeaturesSelection(data)
-    print(parser.checkLowVariance(threshold  = 0.05))
+    print(parser.CorrelationBasedFeatureSelection(treshold  = 0.95 , K=4 , scale = "default" , strategy="simple" , target="icd9_code"))
     

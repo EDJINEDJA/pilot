@@ -37,6 +37,7 @@ import pandas as pd
 import numpy as np
 from typing import List
 from prettytable import PrettyTable
+from scipy.stats import pearsonr
 
 
 class FeaturesTypes( ):
@@ -197,102 +198,148 @@ class FeaturesSelection():
             print("+" + strLen * "-" + "+")
 
 
-    def CorrelationBasedFeatureSelection(self, treshold : float = 0.95 ) -> pd.core.frame.DataFrame:
+    def CorrelationBasedFeatureSelection(self, K : float = 6 , treshold : float = 0.95 ,scale : str = "default", strategy = "pearson", target : str =" " ) -> pd.core.frame.DataFrame:
 
         """
             Correlation-based feature selection
-
-            Sometimes we quickly deduce that our data contains unnecessary variables (eg : date) and we decide to drop it.
         """
+
         # copy the dataframe
         data = self.data.copy()
 
-        # Calculate the correlation matrix
-        corr_matrix = data.corr()
-
-        # Select upper triangle of correlation matrix
-        upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(np.bool))
-
-        # Find index of feature columns with correlation greater than a threshold (e.g. 0.95)
-        to_drop = [column for column in upper.columns if any(upper[column] > treshold)]
-
-        # Drop the correlated columns from the DataFrame
-        data.drop(data[to_drop], axis=1 , inplace = True)
-
-        # Remainder comlumns 
-        remainderColumns = set(self.columns)-set(data.columns)
-      
-        # Create a new table
-        table = PrettyTable()
-
-        # Create a list of dictionaries representing rows
-        rows = []
-
-        for item in remainderColumns:
-            rows.append({"Unnecessary features" : item})
-    
-        # Define the column headers
-        table.field_names = ['Unnecessary features']
-
-        # Add some rows to the table
-        
-        # Use a for loop to add rows to the table
-        for row in rows:
-            table.add_row([row['Unnecessary features']])
-        # string len 
-        strLen = len(" ../ Unnecessary features such as: { remainderColumns } have/has been removed.")
-        
-        # Print the table
-        print("+" + strLen * "-" + "+")
-        print(data.head(4))
-        print("+" + strLen * "-" + "+")
-        print(f" ../ Unnecessary features such as: { remainderColumns } have/has been removed." )
-        print("+" + strLen * "-" + "+")
-        print(table)
-       
-        return data
-
-    def UnivariateFeatureSelection(self , target : str , K : int , strategy : str = "default") -> np.ndarray:
-        """
-           This method uses statistical tests to select the best features based on their individual relevance to the target variable
-        """
         # Reset K value if it is less than 0 and greater than len(self.columns)
         if K < 0 or K > len(self.columns)-1:
-            K = "all"
+            K = len(self.columns)-1
 
-        # Load data
-        data =  self.encode_data(self.data)
-
-        X= data.drop(target , axis =1)
-       
-        if strategy == "default" or "StandardScaler":
-                # Instantiate the StandardScaler
-                scaler = StandardScaler()
-
-                # Scale the data
-                X= scaler.fit_transform(X)
-        elif strategy == "MinMaxScaler":
-                # Instantiate the MinMaxScaler
-                scaler = MinMaxScaler(feature_range=(0, 1))
-
-                # Scale the data
-                X = scaler.fit_transform(X)
-        else:
-                # Instantiate the MaxAbsScaler
-                scaler = MaxAbsScaler()
-
-                # Scale the data
-                X = scaler.fit_transform(X)
+        # Instantiate scale methode  
+        if scale == "default" or "StandardScaler":
+            # Instantiate the StandardScaler
+            scaler = StandardScaler()
+        elif scale == "MinMaxScaler":
+            # Instantiate the MinMaxScaler
+            scaler = MinMaxScaler(feature_range=(0, 1))
+        elif scale == "MaxAbsScaler":
+            # Instantiate the MaxAbsScaler
+            scaler = MaxAbsScaler()
 
 
-        y = np.array(data[target])
+        if strategy == "default":
+            # Calculate the correlation matrix
+            corr_matrix = data.corr()
 
+            # Select upper triangle of correlation matrix
+            upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=K).astype(np.bool))
+
+            # Find index of feature columns with correlation greater than a threshold (e.g. 0.95)
+            to_drop = [column for column in upper.columns if any(upper[column] > treshold)]
+            
+            # Drop the correlated columns from the DataFrame
+            data.drop(data[to_drop], axis=1 , inplace = True)
+
+            # Remainder columns 
+            remainderColumns = set(self.columns)-set(data.columns)
         
-        # Select the top K features
-        selector = SelectKBest(f_regression, k=K).fit(X, y)
-        X_new = selector.transform(X)
-       
-        return X_new
+            # Create a new table
+            table = PrettyTable()
+
+            # Create a list of dictionaries representing rows
+            rows = []
+
+            for item in remainderColumns:
+                rows.append({"Unnecessary features" : item})
+        
+            # Define the column headers
+            table.field_names = ['Unnecessary features']
+
+            # Add some rows to the table
+            # Use a for loop to add rows to the table
+            for row in rows:
+                table.add_row([row['Unnecessary features']])
+            # string len 
+            strLen = len(" ../ Unnecessary features such as: { remainderColumns } have/has been removed.")
+            
+            # Print the table
+            print("+" + strLen * "-" + "+")
+            print(data.head(4))
+            print("+" + strLen * "-" + "+")
+            print(f" ../ Unnecessary features such as: { remainderColumns } have/has been removed." )
+            print("+" + strLen * "-" + "+")
+            print(table)
+
+        if strategy == "pearson":
+            #Data encoding
+            data = self.encode_data(data)
+
+            #Features engineering
+            features = list(data.columns)
+            features.remove(target)
+
+            #Calculate correlation coefficients
+            correlations = {}
+            for feature in features:
+                corr, _ = pearsonr(data[feature], data[target])
+                correlations[feature] = corr
+            
+            # Select top k features
+            top_features = sorted(correlations, key=correlations.get, reverse=True)[:K]
+
+            #Remainder feature 
+            remainderColumns = [item for item in features if item not in set(top_features)]
+
+            # Create a new table
+            table = PrettyTable()
+            # Create a list of dictionaries representing rows
+            rows = []
+
+            for item in remainderColumns:
+                rows.append({"Unnecessary features" : item})
+    
+            # Define the column headers
+            table.field_names = ['Unnecessary features']
+
+            # Add some rows to the table
+            # Use a for loop to add rows to the table
+            for row in rows:
+                table.add_row([row['Unnecessary features']])
+
+            # string len 
+            strLen = len(" ../ Unnecessary features such as: { remainderColumns } have/has been removed.")
+            
+            # Print the table
+            print("+" + strLen * "-" + "+")
+            print(data.head(4))
+            print("+" + strLen * "-" + "+")
+            print(f" ../ Unnecessary features such as: { remainderColumns } have/has been removed." )
+            print("+" + strLen * "-" + "+")
+            print(table)
+
+            for item in remainderColumns:
+                
+                self.data.drop(item ,  axis=1 , inplace = True)
+
+
+            return self.data
+
+        if strategy == "simple":
+         
+            # Load data
+            data =  self.encode_data(self.data)
+
+            X= data.drop(target , axis =1)
+        
+            # Scale the data
+            X= scaler.fit_transform(X)
+
+            y = np.array(data[target])
+            
+            # Select the top K features
+            selector = SelectKBest(f_regression, k=K).fit(X, y)
+            X_new = selector.transform(X)
+            
+        
+            return X_new
+
+            
 
     def  RecursiveFeatureElimination(self  , target : str , K : int , strategy : str = "default"):
 
@@ -335,9 +382,6 @@ class FeaturesSelection():
         
         return X_new
 
-
-        
-    
 
 
 

@@ -96,7 +96,6 @@ $ from pilot import pilot
 
 ## Types of Features
 First of all, it is important to know the types of variables. 
-
 The overall structre of data is 
 - Numerical variable
 - Categorical variable (nominal and ordinal)
@@ -117,7 +116,7 @@ $ parser.checkDtypes()
 ```
 
 ## Features selection
-### checkLowVariance
+### check low variance
 Variance is an empirical metric used to mesure dispersion of the values of a sample or of a probability distribution.
 The variance is the square of the type of deviation
 
@@ -128,39 +127,51 @@ $ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",")
 $ parser = FeaturesSelection(data)
 $ parser.checkLowVariance(threshold  = 0.05)
 ```
+### Check low variance columns
+It is the same process as the previous concept
+It shows the name of the variables that have a low variance.
+
+```python
+$ from pilot import FeaturesTypes
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ parser = FeaturesSelection(data)
+$ parser.checkLowVarianceColumns(threshold  = 0.05)
+```
+
+### Correlation based feature selection
+Correlation based feature selection is a method used in machine learning to select the most relevant features for a given dataset. It works by analyzing the correlation between each feature and the target variable and selecting the features that have the highest correlation with the target. This can help to reduce the dimensionality of the dataset, improve the performance of the model, and reduce overfitting. The most common method for correlation-based feature selection is Pearson correlation coefficient, but other methods like Mutual Information, Kendall rank correlation coefficient, and Spearman rank correlation coefficient also can be used.
+
+### Correlation based feature selection (pearson correlation)
+Correlation-based feature selection is a method of selecting features for a model based on the correlation between the features and the target variable. The Pearson correlation coefficient is a measure of the linear correlation between two variables. In Python, this can be calculated using the pearsonr function from the scipy library.
+
 ## Handle missing values
 <strong> Hadling missing values </strong> is an essential in feature engineering because all data in real life comes with some missing values.
-In general there is not an optimal way to handle missing values. because there is different types and charactiristics of the dataset.
+In general there is not an optimal way to handle missing values, because there is different types and charactiristics of the dataset.
 Indeed, there are several ways to handle missing values in a dataset, including:
 
 #### Deleting rows or columns with missing data:
-
 This approach is simple and can work well if the amount of missing data is small. However, it can lead to a loss of information if a large portion of the data is removed.
-
 To do that use strategy default
 
 ```python
 $ from pilot import pilot 
-$ pilot.HandlMissingValues(data=data, scalar = 0 , strategy = "default")
+#Read the csv  file or something else as dataframe 
+$ data= pd.read_csv(filepath_or_buffer="file.csv" , sep = ",") 
+$ pilot.HandlMissingValues(data = data, scalar = 0 , strategy = "default")
 ```
 
-
 #### Imputing missing values:
-
 This method involves replacing missing values with estimates, such as the mean or median of the non-missing values. This approach can help to preserve the size of the dataset, but the imputed values are not always accurate.
 
 #### Using a predictive model:
-
 A machine learning model can be trained to predict missing values based on the other features in the dataset. This approach can be more accurate than imputation, but it requires a sufficient amount of non-missing data to train the model.
 
 #### Using a flag:
-
 Creating a new column which indicates whether a value is missing or not.
 
 #### Using interpolation technique:
-
 replacing the missing value with the average of the value before and after the missing value.
-
 The best approach depends on the specific situation and the amount of missing data. It's also best to use multiple techniques and compare the results.
 
 ## Handle outliers
